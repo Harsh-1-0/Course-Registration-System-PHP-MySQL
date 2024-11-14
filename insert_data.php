@@ -5,10 +5,10 @@ if($_SESSION['authuser']!=1)
 echo"ACCESS DENIED";
 exit();
 }
-$connect = mysql_connect("localhost", "root", "") or die ("check your server connection.");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection.");
 
 
-mysql_select_db("2008b4a5723p");
+mysqli_select_db($connect,"2008b4a5723p");
 $name = $_POST['name'];
 $pass = $_POST['pass'];
 $branch = $_POST['branch'];
@@ -21,7 +21,7 @@ else{
 $insert = "INSERT INTO members(username,password,branch,year)
 values('$name','$pass','$branch','$year')";
 
-$results=mysql_query($insert) or die(mysql_error());
+$results=mysqli_query($connect,$insert) or die(mysqli_error($connect));
 
 echo " Successfully added information";
 }

@@ -1,11 +1,11 @@
 <?php
-$connect = mysql_connect("localhost", "root", "") or die ("check your server connection.");
+$connect = mysqli_connect("localhost", "root", "") or die ("check your server connection.");
 
-mysql_query("DROP DATABASE 2008b4a5723p");
+mysqli_query($connect,"DROP DATABASE 2008b4a5723p");
 
-mysql_query("CREATE DATABASE 2008b4a5723p");
+mysqli_query($connect,"CREATE DATABASE 2008b4a5723p");
 
-mysql_select_db("2008b4a5723p");
+mysqli_select_db($connect,"2008b4a5723p");
 
 $members="CREATE TABLE members (
 id int(4) NOT NULL auto_increment,
@@ -33,9 +33,9 @@ PRIMARY KEY (id)
 )Engine=InnoDB AUTO_INCREMENT=1 ";
 
 
-$results = mysql_query($members) or die (mysql_error());
-$results = mysql_query($course) or die (mysql_error());
-$results = mysql_query($regis) or die (mysql_error());
+$results = mysqli_query($connect,$members) or die (mysqli_error($connect));
+$results = mysqli_query($connect,$course) or die (mysqli_error($connect));
+$results = mysqli_query($connect,$regis) or die (mysqli_error($connect));
 echo "Database successfully created!";
 
 

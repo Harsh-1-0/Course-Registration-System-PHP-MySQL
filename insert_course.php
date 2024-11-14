@@ -5,9 +5,9 @@ if($_SESSION['authuser']!=1)
 echo"ACCESS DENIED";
 exit();
 }
-$connect = mysql_connect("localhost", "root", "") or die ("check your server connection.");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection.");
 
-mysql_select_db("2008b4a5723p");
+mysqli_select_db($connect,"2008b4a5723p");
 
 $name = $_POST['name'];
 $credit = $_POST['credit'];
@@ -20,7 +20,7 @@ else{
 $insert = "INSERT INTO course(name,credit,instructor)
 values('$name','$credit','$instructor')";
 
-$results=mysql_query($insert) or die(mysql_error());
+$results=mysqli_query($connect,$insert) or die(mysqli_error($connect));
 
 echo " SUCESSFULLY ADDED INFORMATION<br/><a href='add_course.php'>Back</a>";
 }

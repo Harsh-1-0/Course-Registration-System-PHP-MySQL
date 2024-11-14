@@ -10,19 +10,19 @@ if(isset($_POST['save_btn']))
         
      
 	 
-$connect = mysql_connect("localhost", "root", "") or die ("check your server connection");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection");
 $uname= $_GET['myusername'];
 $upass= $_GET['mypassword'];
 
 $_SESSION['username']=$uname;
 $_SESSION['pass']=$upass;
 
-mysql_select_db ("2008b4a5723p");
+mysqli_select_db ($connect,"2008b4a5723p");
 $query="SELECT * FROM members WHERE username='$uname' and password='$upass'";
 
-$results=mysql_query($query) or die(mysql_error());
+$results=mysqli_query($connect,$query) or die(mysqli_error($connect));
 
-if($row = mysql_fetch_array($results))
+if($row = mysqli_fetch_array($results))
 {
 echo'<script> window.location="SchoolDB/result.php"; </script> ';
 }

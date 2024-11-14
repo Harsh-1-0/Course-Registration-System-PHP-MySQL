@@ -6,19 +6,19 @@ echo"ACCESS DENIED";
 exit();
 }
 
-$connect = mysql_connect("localhost", "root", "") or die ("check your server connection");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection");
 $uname= $_GET['myusername'];
 $upass= $_GET['mypassword'];
 
 $_SESSION['username']=$uname;
 $_SESSION['pass']=$upass;
 
-mysql_select_db ("2008b4a5723p");
+mysqli_select_db ($connect,"2008b4a5723p");
 $query="SELECT * FROM members WHERE username='$uname' and password='$upass'";
 
-$results=mysql_query($query) or die(mysql_error());
+$results=mysqli_query($connect,$query) or die(mysqli_error($connect));
 
-if($row = mysql_fetch_array($results))
+if($row = mysqli_fetch_array($results))
   { echo"Welcome ". $row['username'] ."!!<br/>";
   echo "<table  style='width:50%' class='CSSTableGenerator'>
 USER INFORMATION<tr>
@@ -75,10 +75,10 @@ INNER JOIN regis
 ON course.name=regis.cname 
 AND regis.uname= '$uname';";
 
-$results=mysql_query($query) or die(mysql_error());
+$results=mysqli_query($connect,$query) or die(mysqli_error($connect));
 
 echo "<center><table style='width:50%' class='CSSTableGenerator'><tr><td></td><td><b>Course ID</b></td><td><b>Credits</b></td><td><b>Instructor</b></td></tr>\n";
-while ($rows=mysql_fetch_assoc($results)) {
+while ($rows=mysqli_fetch_assoc($results)) {
 echo "<tr><td><a href='Remove_Course.php?cname=$rows[cname]&uuname=$uname'>Remove</a></td>\n"; 
 foreach($rows as $value) 
 {
@@ -98,7 +98,7 @@ echo "</table></center>\n";
 
 <footer>
             <a href="default.aspx" style="color: white;">Back to home</a>
-            © 2013 Gaikwad Company, Inc. Course Registration System 
+            ï¿½ 2013 Gaikwad Company, Inc. Course Registration System 
         </footer>
 		
 <html>

@@ -5,15 +5,15 @@ if($_SESSION['authuser']!=1)
 echo"ACCESS DENIED";
 exit();
 }
-$connect = mysql_connect("localhost","root","") or die ("check your server connection.");
+$connect = mysqli_connect("localhost","root","123456789") or die ("check your server connection.");
 
-mysql_select_db("2008b4a5723p");
+mysqli_select_db($connect,"2008b4a5723p");
 
 echo "<h2>Course Registration</h2>";
 $query="SELECT course.name FROM course";
-$results=mysql_query($query) or die(mysql_error());
-echo"<b>Available courses</b> <table  border=’2’>\n";
-while ($rows=mysql_fetch_assoc($results)) {
+$results=mysqli_query($connect,$query) or die(mysqli_error($connect));
+echo"<b>Available courses</b> <table  border=ï¿½2ï¿½>\n";
+while ($rows=mysqli_fetch_assoc($results)) {
 echo "<tr>\n"; 
 foreach($rows as $value) 
 {
@@ -39,7 +39,7 @@ Course ID :<input type="text" name="course">
 </html>	
 <footer>
             <a href="default.aspx" style="color: white;">Back to home</a>
-            © 2013 Gaikwad Company, Inc. Course Registration System 
+            ï¿½ 2013 Gaikwad Company, Inc. Course Registration System 
         </footer>
 <html>
 <head>

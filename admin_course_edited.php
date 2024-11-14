@@ -6,15 +6,15 @@ echo"ACCESS DENIED";
 exit();
 }
 
-$connect = mysql_connect("localhost", "root", "") or die ("check your server connection.");
-mysql_select_db("2008b4a5723p");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection.");
+mysqli_select_db($connect,"2008b4a5723p");
 
 $name=$_POST['name'];
 $course=$_POST['course'];
 $new=$_POST['new'];
 
 $query = "update regis SET cname = '$new' WHERE uname = '$name' AND cname = '$course'";
-$results=mysql_query($query) or die(mysql_error());
+$results=mysqli_query($connect,$query) or die(mysqli_error($connect));
 echo"COURSE CHANGED SUCESSFULLY";
 
 ?>

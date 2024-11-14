@@ -26,7 +26,7 @@ $results=mysqli_query($connect,$insert) or die(mysqli_error($connect));
 echo " Successfully added information";
 }
 ?>
-<form method="post" action="welcome(main page).php">
+<form method="post" action="/">
 <input type="submit" class="myButton" name="wel" value="click here to go to login page">
 </form>
 

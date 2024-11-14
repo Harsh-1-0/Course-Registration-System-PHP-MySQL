@@ -1,5 +1,5 @@
 <?php
-$connect = mysqli_connect("localhost", "root", "") or die ("check your server connection.");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection.");
 
 mysqli_query($connect,"DROP DATABASE 2008b4a5723p");
 

@@ -6,7 +6,7 @@ echo"ACCESS DENIED";
 exit();
 }
 
-$connect = mysqli_connect("localhost", "root", "") or die ("check your server connection.");
+$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection.");
 mysqli_select_db($connect,"2008b4a5723p");
 
 $cname=$_POST['course'];

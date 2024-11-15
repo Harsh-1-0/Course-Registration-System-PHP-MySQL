@@ -1,0 +1,206 @@
+/* Root Variables for Consistency */
+:root {
+  /* Core Blues */
+  --blue-50: #f0f9ff;
+  --blue-100: #e0f2fe;
+  --blue-200: #bae6fd;
+  --blue-300: #7dd3fc;
+  --blue-400: #38bdf8;
+  --blue-500: #0ea5e9;
+  --blue-600: #0284c7;
+  --blue-700: #0369a1;
+  --blue-800: #075985;
+  --blue-900: #0c4a6e;
+  
+  /* Functional Colors */
+  --primary-bg: var(--blue-700);
+  --button-primary: var(--blue-600);
+  --button-hover: var(--blue-700);
+  --table-header: var(--blue-800);
+  --table-header-hover: var(--blue-900);
+  --footer-bg: rgba(12, 74, 110, 0.85);  /* Based on blue-900 */
+  
+  /* Additional Variables */
+  --surface: #ffffff;
+  --text-primary: #262626;
+  --text-secondary: var(--blue-900);
+  --text-muted: var(--blue-600);
+  --border-color: var(--blue-200);
+}
+
+/* Global Body Styles */
+body {
+  background: var(--primary-bg);
+  margin-top: 250px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* Button */
+.myButton {
+  background-color: var(--button-primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 24px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.myButton:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-1px);
+}
+
+.myButton:active {
+  transform: translateY(0);
+}
+
+/* Table */
+.CSSTableGenerator {
+  margin: 24px 0;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.CSSTableGenerator table {
+  width: 100%;
+}
+
+.CSSTableGenerator tr {
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.CSSTableGenerator tr:hover {
+  background-color: var(--blue-50);
+}
+
+.CSSTableGenerator th,
+.CSSTableGenerator td {
+  text-align: left;
+  padding: 16px 24px;
+  font-size: 14px;
+}
+
+.CSSTableGenerator td {
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 400;
+}
+
+.CSSTableGenerator th {
+  background: var(--table-header);
+  color: var(--text-primary);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border: none;
+}
+
+.CSSTableGenerator th:hover {
+  background: var(--table-header-hover);
+}
+
+.CSSTableGenerator tr:last-child td {
+  border-bottom: none;
+}
+
+/* Improve table header top corners */
+.CSSTableGenerator th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.CSSTableGenerator th:last-child {
+  border-top-right-radius: 8px;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background: var(--footer-bg);
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+/* Empty State & Loading States */
+.empty-state {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    margin-top: 150px;
+    padding: 0 16px;
+  }
+
+  .CSSTableGenerator {
+    margin: 16px 0;
+  }
+
+  .CSSTableGenerator th,
+  .CSSTableGenerator td {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .myButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  footer {
+    padding: 12px 16px;
+  }
+}
+
+/* Focus States */
+.myButton:focus,
+.CSSTableGenerator th:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--blue-300);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  .CSSTableGenerator {
+    box-shadow: none;
+  }
+
+  footer {
+    position: static;
+    background: none;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+  }
+}

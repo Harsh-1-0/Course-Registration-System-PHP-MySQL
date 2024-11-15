@@ -42,7 +42,7 @@ echo "Database successfully created!";
 ?>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" /> 
+<link rel="stylesheet" type="text/css" href="text.css" /> 
 </head>
 <body>
 <div id="div1"></div>

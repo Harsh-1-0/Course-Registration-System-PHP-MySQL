@@ -28,13 +28,10 @@ echo " SUCESSFULLY ADDED INFORMATION<br/><a href='add_course.php'>Back</a>";
 
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" /> 
+<link rel="stylesheet" type="text/css" href="text.css" /> 
 </head>
 <body>
 <div id="div1"></div>
-<footer>
-            <a href="default.aspx" style="color: white;">Back to home</a>
-            © 2013 Gaikwad Company, Inc. Course Registration System 
-        </footer>
+
 </body>
 </html>	

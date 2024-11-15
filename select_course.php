@@ -27,13 +27,10 @@ echo "</tr><br>\n";
 }
 echo "</table>\n"; 
 ?>
-<footer>
-            <a href="default.aspx" style="color: white;">Back to home</a>
-            � 2013 Gaikwad Company, Inc. Course Registration System 
-        </footer>
+
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" /> 
+<link rel="stylesheet" type="text/css" href="text.css" /> 
 </head>
 <body>
 <div id="div1"></div>

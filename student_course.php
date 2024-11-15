@@ -1,115 +1,98 @@
 <?php
 session_start();
-if($_SESSION['authuser']!=1)
-{
-echo"ACCESS DENIED";
-exit();
+if ($_SESSION['authuser'] != 1) {
+    echo "ACCESS DENIED";
+    exit();
 }
 
-$connect = mysqli_connect("localhost", "root", "123456789") or die ("check your server connection.");
-mysqli_select_db($connect,"2008b4a5723p");
+// Database connection
+$connect = mysqli_connect("localhost", "root", "123456789", "2008b4a5723p") or die("Check your server connection.");
 
-$cname=$_POST['course'];
-$name=$_POST['name'];
+// Get inputs and sanitize them
+$cname = mysqli_real_escape_string($connect, $_POST['course']);
+$name = mysqli_real_escape_string($connect, $_POST['name']);
 
-$q="SELECT count(cname) FROM regis WHERE uname='$name'";                 // for verifying the total courses by a student
-$r=mysqli_query($connect,$q) or die(mysqli_error($connect));
-$reg=mysqli_fetch_assoc($r);
-foreach($reg as $value)
-{
-if($value >3)
-{
-echo"<a href='new_course_reg.php'>Back</a></br>";
-echo "ERRROR IN REGISTRATION(YOU HAVE ALREADY SELECTED 4 COURSES)";
-exit();
-}
-}
+// Check if student has registered for 4 courses
+$q = "SELECT COUNT(cname) AS total_courses FROM regis WHERE uname='$name'";
+$r = mysqli_query($connect, $q) or die(mysqli_error($connect));
+$reg = mysqli_fetch_assoc($r);
 
-$q1="SELECT count(cname) FROM regis WHERE cname='$cname'";                 // for verifying the total students in the course
-$r1=mysqli_query($connect,$q1) or die(mysqli_error($connect));
-$reg1=mysqli_fetch_assoc($r1);
-foreach($reg1 as $value1)
-{
-if($value1 >15)
-{
-printf("ERRROR IN REGISTRATION(MAXIMUM STUDENTS IN A COURSE REACHED)");
-exit();
-}
+if ($reg['total_courses'] >= 4) {
+    echo "<a href='new_course_reg.php'>Back</a><br/>";
+    echo "ERROR IN REGISTRATION (YOU HAVE ALREADY SELECTED 4 COURSES)";
+    exit();
 }
 
-$q2="SELECT cname FROM regis WHERE cname='$cname' AND uname='$name'";                 // for verifying the if student has already registered for the course
-$r2=mysqli_query($connect,$q2) or die(mysqli_error($connect));
-$reg2=mysqli_fetch_assoc($r2);
-if(mysqli_num_rows($r2) != 0)
-{echo "<a href='new_course_reg.php'>Back</a><br/>COURSE ALREADY REGISTERED BY STUDENT $name";
-exit();
+// Check if course has reached maximum student limit
+$q1 = "SELECT COUNT(cname) AS course_count FROM regis WHERE cname='$cname'";
+$r1 = mysqli_query($connect, $q1) or die(mysqli_error($connect));
+$reg1 = mysqli_fetch_assoc($r1);
+
+if ($reg1['course_count'] >= 15) {
+    echo "ERROR IN REGISTRATION (MAXIMUM STUDENTS IN A COURSE REACHED)";
+    exit();
 }
 
+// Check if the student is already registered for the course
+$q2 = "SELECT cname FROM regis WHERE cname='$cname' AND uname='$name'";
+$r2 = mysqli_query($connect, $q2) or die(mysqli_error($connect));
 
-
-$query="SELECT name FROM course WHERE name='$cname'";              //for inserting the record
-$results=mysqli_query($connect,$query) or die(mysqli_error($connect));
-if($rows=mysqli_fetch_assoc($results)) 
-{
-foreach($rows as $value) 
-echo $value; 
-
-echo "<br/>Above course has been added sucessfully";
-echo"<br/>";
-echo"<a href='new_course_reg.php'>Back</a></br>";
-$insert = "INSERT INTO regis(uname,cname)
-values('$name','$value')";
-$results=mysqli_query($connect,$insert) or die(mysqli_error($connect));
-}
-else
-{
-echo"error in registration";
-exit();
+if (mysqli_num_rows($r2) > 0) {
+    echo "<a href='new_course_reg.php'>Back</a><br/>COURSE ALREADY REGISTERED BY STUDENT $name";
+    exit();
 }
 
-$sum=0;
-$q2="SELECT count(cname) FROM regis WHERE uname='$name'";                 // total credit of courses for each student
-$r2=mysqli_query($connect,$q2) or die(mysqli_error($connect));
-$reg2=mysqli_fetch_assoc($r2);
-foreach($reg2 as $value2)
-{   
-    if($value2 ==4)														//If 4 courses registered the will check credit hours 
-    {
-	
-    $q3="SELECT cname FROM regis WHERE uname='$name'";                 
-    $r3=mysqli_query($connect,$q3) or die(mysqli_error($connect));
-    while($reg3=mysqli_fetch_assoc($r3))
-	{
-    foreach($reg3 as $value3)
-      {
-	  	$q4="SELECT credit FROM course WHERE name='$value3'";                 
-        $r4=mysqli_query($connect,$q4) or die(mysqli_error($connect));
-        $reg4=mysqli_fetch_assoc($r4); 
-         foreach($reg4 as $value4)
-         {  
-         $sum=$sum + $value4;		 
-	     }                             
-	   }  
-	}  
-         		    if($sum < 9)										//If credit hours are less then 9 then registration error
-					{
-					printf("REGISTRATION ERROR(TOTAL CREDIT IS LESS THAN 9)");
-					exit();
-					}  
- }
-} 
+// Insert course registration
+$query = "SELECT name FROM course WHERE name='$cname'";
+$results = mysqli_query($connect, $query) or die(mysqli_error($connect));
+
+if ($rows = mysqli_fetch_assoc($results)) {
+    $course_name = $rows['name'];
+    echo "Course '$course_name' has been added successfully.<br/>";
+    echo "<a href='new_course_reg.php'>Back</a><br/>";
+    
+    $insert = "INSERT INTO regis(uname, cname) VALUES('$name', '$course_name')";
+    mysqli_query($connect, $insert) or die(mysqli_error($connect));
+} else {
+    echo "Error in registration.";
+    exit();
+}
+
+// Calculate total credit hours if student has registered for 4 courses
+$q2 = "SELECT COUNT(cname) AS total_courses FROM regis WHERE uname='$name'";
+$r2 = mysqli_query($connect, $q2) or die(mysqli_error($connect));
+$reg2 = mysqli_fetch_assoc($r2);
+
+if ($reg2['total_courses'] == 4) {
+    $sum = 0;
+    $q3 = "SELECT cname FROM regis WHERE uname='$name'";
+    $r3 = mysqli_query($connect, $q3) or die(mysqli_error($connect));
+
+    while ($reg3 = mysqli_fetch_assoc($r3)) {
+        $course_name = $reg3['cname'];
+        
+        $q4 = "SELECT credit FROM course WHERE name='$course_name'";
+        $r4 = mysqli_query($connect, $q4) or die(mysqli_error($connect));
+        $reg4 = mysqli_fetch_assoc($r4);
+        
+        $sum += $reg4['credit'];
+    }
+
+    if ($sum < 9) {
+        echo "REGISTRATION ERROR (TOTAL CREDIT IS LESS THAN 9)";
+        exit();
+    }
+}
 ?>
-<footer>
-            <a href="default.aspx" style="color: white;">Back to home</a>
-            © 2013 Gaikwad Company, Inc. Course Registration System 
-        </footer>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" /> 
+    <meta charset="UTF-8">
+    <title>Course Registration</title>
+    <link rel="stylesheet" type="text/css" href="text.css">
 </head>
 <body>
-<div id="div1"></div>
+    <div id="div1"></div>
 </body>
-</html>	
-
-
+</html>

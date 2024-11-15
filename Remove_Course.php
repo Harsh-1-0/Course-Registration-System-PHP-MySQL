@@ -19,8 +19,3 @@ echo " COURSE SUCESSFULLY REMOVED<br/><a href='default.php'>Back</a>";
 
 
 ?>
-
-<footer>
-            <a href="default.aspx" style="color: white;">Back to home</a>
-            © 2013 Gaikwad Company, Inc. Course Registration System 
-        </footer>
